@@ -69,10 +69,10 @@ status:
 	@$(DOCKER) ps
 
 stan:
-	@${DOCKER_COMPOSE} exec backend vendor/bin/phpstan analyze -l 8 src fixtures
+	@${DOCKER_COMPOSE} exec backend vendor/bin/phpstan analyze -l 8 src
 
 csfix:
-	@${DOCKER_COMPOSE} exec backend vendor/bin/php-cs-fixer fix --ansi -v --config=.php_cs.dist --path-mode=intersection src fixtures migrations
+	@${DOCKER_COMPOSE} exec backend vendor/bin/php-cs-fixer fix --ansi -v --config=.php-cs-fixer.dist.php --path-mode=intersection src migrations
 
 tests:
 	@${DOCKER_COMPOSE} exec backend vendor/bin/phpunit src
