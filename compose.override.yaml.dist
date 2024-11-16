@@ -1,0 +1,41 @@
+services:
+  backend:
+    build:
+      args:
+        - WITH_XDEBUG=false
+    
+    volumes:
+      - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini:ro
+      - ../todo-app:/var/app/log
+    environment:
+      - PHP_IDE_CONFIG=serverName=todo-app_backend_1
+  
+  nginx:
+    # uncomment ports section when exposing todo-app directly to localhost
+    #    ports:
+    #      - 80:80
+    # uncomment labels and network section when using todo-app in conjunction with traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.todo-app-nginx.rule=Host(`todo.loc`)"
+      - "traefik.http.routers.todo-app-nginx.tls=true"
+      - "traefik.http.routers.todo-app-nginx.tls.certresolver=myresolver"
+      - "traefik.http.routers.todo-app-nginx.entrypoints=web-secure"
+      - "traefik.http.routers.todo-app-nginx.middlewares=cors-headers@file"
+      ## Enable http to https redirection over traefik
+      - "traefik.http.routers.todo-app-nginx-http.entrypoints=web"
+      - "traefik.http.routers.todo-app-nginx-http.rule=Host(`todo.loc`)"
+      - "traefik.http.routers.todo-app-nginx-http.middlewares=cors-headers@file"
+    networks:
+      - web
+  
+  storage:
+    environment:
+      - MYSQL_DATABASE=todo-app
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3317:3306" #outside:inside docker container from-within
+
+networks:
+  web:
+    external: true
