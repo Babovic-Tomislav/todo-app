@@ -4,7 +4,7 @@ namespace Shared\Application\Query;
 
 trait QueryHandleTrait
 {
-    private QueryBusInterface $queryBus;
+    private readonly QueryBusInterface $queryBus;
 
     public function ask(QueryInterface $query): mixed
     {

@@ -57,7 +57,7 @@ abstract class BaseRepository extends ServiceEntityRepository implements Storage
     }
 
     /**
-     * @param array<string, mixed>      $criteria
+     * @param array<string, mixed> $criteria
      * @param array<string, mixed>|null $orderBy
      *
      * @return StorageEntityInterface[]
@@ -79,7 +79,7 @@ abstract class BaseRepository extends ServiceEntityRepository implements Storage
     }
 
     /**
-     * @param array<string, mixed>      $criteria
+     * @param array<string, mixed> $criteria
      * @param array<string, mixed>|null $orderBy
      */
     public function findOneBy(array $criteria, ?array $orderBy = null, bool $includeSoftDeletedRecords = false): ?StorageEntityInterface
@@ -145,7 +145,7 @@ abstract class BaseRepository extends ServiceEntityRepository implements Storage
         $isSoftDeletedFilterEnabled ? $this->disableSoftDeletedFilter() : $this->enableSoftDeletedFilter();
 
         if (null === $entity) {
-            $message = sprintf('Resource of type %s and ID %s could not be found!', $this->getEntityName(), $id);
+            $message = \sprintf('Resource of type %s and ID %s could not be found!', $this->getEntityName(), $id);
             throw new NotFoundHttpException($message, null, Response::HTTP_NOT_FOUND);
         }
 
@@ -154,7 +154,7 @@ abstract class BaseRepository extends ServiceEntityRepository implements Storage
 
     private function isSoftDeletedFilterEnabled(): bool
     {
-        if ($this->isSoftDeletedFilterEnabled()) {
+        if ($this->getEntityManager()->getFilters()->isEnabled('soft_deletable')) {
             return true;
         }
 

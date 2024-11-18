@@ -12,4 +12,10 @@ interface DomainModelRepositoryInterface
      * @param array<string, mixed> $criteria
      */
     public function existsWith(array $criteria): bool;
+
+    /**
+     * @param array<string, mixed> $criteria
+     * @param array<string, mixed>|null $orderBy
+     */
+    public function findOneBy(array $criteria, ?array $orderBy = null, bool $includeSoftDeletedRecords = false): ?AbstractEntity;
 }

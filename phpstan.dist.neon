@@ -1,8 +1,4 @@
 parameters:
-    ignoreErrors:
-        -
-            identifier: trait.unused
-            path: src/Shared/Application/Query/*
     level: 8
     paths:
         - bin/

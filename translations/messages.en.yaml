@@ -1,0 +1,16 @@
+password:
+  length:
+    minimum: "Password must be at least %limit% characters long"
+    maximum: "Password must be at most %limit% characters long"
+username:
+  length:
+    minimum: "Username must be at least %limit% characters long"
+    maximum: "Username must be at most %limit% characters long"
+name:
+  length:
+    minimum: "Name must be at least %limit% characters long"
+    maximum: "Name must be at most %limit% characters long"
+lastname:
+  length:
+    minimum: "Lastname must be at least %limit% characters long"
+    maximum: "Lastname must be at most %limit% characters long"

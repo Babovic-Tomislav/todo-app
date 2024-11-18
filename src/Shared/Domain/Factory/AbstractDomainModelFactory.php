@@ -25,7 +25,7 @@ abstract readonly class AbstractDomainModelFactory
     {
         $validationResult = $this->validator->validate($data);
 
-        if ($validationResult->isValid()) {
+        if (!$validationResult->isValid()) {
             $this->throwValidationException($validationResult);
         }
 

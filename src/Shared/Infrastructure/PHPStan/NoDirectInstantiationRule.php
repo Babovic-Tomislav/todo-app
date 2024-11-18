@@ -61,7 +61,7 @@ readonly class NoDirectInstantiationRule implements Rule
 
                 if (!$classInContextInAllowedClasses) {
                     return [
-                        RuleErrorBuilder::message(sprintf(
+                        RuleErrorBuilder::message(\sprintf(
                             'New %s instance can be created only in %s.',
                             $className,
                             implode(',', $this->allowedContexts)

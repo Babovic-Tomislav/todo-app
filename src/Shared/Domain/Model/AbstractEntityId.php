@@ -8,7 +8,7 @@ abstract readonly class AbstractEntityId
 {
     protected string $uuid;
 
-    public function __construct(?string $uuid)
+    public function __construct(?string $uuid = null)
     {
         if (null === $uuid) {
             $uuid = Uuid::uuid4();

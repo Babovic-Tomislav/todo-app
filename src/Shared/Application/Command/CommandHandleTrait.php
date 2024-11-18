@@ -4,7 +4,7 @@ namespace Shared\Application\Command;
 
 trait CommandHandleTrait
 {
-    private CommandBusInterface $commandBus;
+    private readonly CommandBusInterface $commandBus;
 
     public function handle(CommandInterface $command): void
     {

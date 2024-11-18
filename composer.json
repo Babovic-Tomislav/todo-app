@@ -25,6 +25,7 @@
         "symfony/monolog-bundle": "^3.10",
         "symfony/runtime": "^6.4",
         "symfony/security-bundle": "^6.4",
+        "symfony/translation": "^6.4",
         "symfony/twig-bundle": "^6.4",
         "symfony/validator": "^6.4",
         "symfony/yaml": "^6.4",
@@ -43,7 +44,9 @@
         "psr-4": {
             "App\\": "src/",
             "Storage\\": "src/Storage",
-            "Shared\\": "src/Shared"
+            "Shared\\": "src/Shared",
+            "User\\": "src/User",
+            "Auth\\": "src/Auth"
         }
     },
     "autoload-dev": {

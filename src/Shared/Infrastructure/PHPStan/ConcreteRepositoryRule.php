@@ -31,7 +31,7 @@ final class ConcreteRepositoryRule implements Rule
             return [];
         }
 
-        $className = $scope->getNamespace().'\\'.$node->name->toString();
+        $className = $scope->getNamespace() . '\\' . $node->name->toString();
 
         if (!$this->reflectionProvider->hasClass($className)) {
             return [];
@@ -52,7 +52,7 @@ final class ConcreteRepositoryRule implements Rule
         }
 
         return [
-            RuleErrorBuilder::message(sprintf(
+            RuleErrorBuilder::message(\sprintf(
                 'Class %s must implement interface that extends %s.',
                 $className,
                 $this->requiredSubInterface

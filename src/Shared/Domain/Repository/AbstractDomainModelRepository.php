@@ -27,4 +27,18 @@ abstract readonly class AbstractDomainModelRepository implements DomainModelRepo
     {
         return $this->storageRepository->existsWith($criteria);
     }
+
+    /**
+     * @param array<string, mixed> $criteria
+     */
+    public function findOneBy(array $criteria, ?array $orderBy = null, bool $includeSoftDeletedRecords = false): ?AbstractEntity
+    {
+        $storageEntity = $this->storageRepository->findOneBy($criteria);
+
+        if (null === $storageEntity) {
+            return null;
+        }
+
+        return $this->mapper->toDomainModel($storageEntity);
+    }
 }

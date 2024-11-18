@@ -72,7 +72,7 @@ stan:
 	@${DOCKER_COMPOSE} exec backend vendor/bin/phpstan analyze -c phpstan.dist.neon
 
 csfix:
-	@${DOCKER_COMPOSE} exec backend vendor/bin/php-cs-fixer fix --ansi -v --config=.php-cs-fixer.dist.php --path-mode=intersection src migrations
+	@${DOCKER_COMPOSE} exec backend vendor/bin/php-cs-fixer fix --ansi -v --config=.php-cs-fixer.dist.php --path-mode=intersection src migrations tests
 
 run_tests:
 	@${DOCKER_COMPOSE} exec backend bin/phpunit

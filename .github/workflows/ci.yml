@@ -47,21 +47,18 @@ jobs:
         run: docker compose exec -T backend composer install
       -
         name: Check HTTP reachability
-        if: false
         run: curl -v --fail-with-body http://localhost:809
       -
         name: Create test database
         run: docker compose exec -T backend bin/console -e test doctrine:database:create
       -
         name: Run migrations
-        if: false
         run: docker compose exec -T backend bin/console -e test doctrine:migrations:migrate --no-interaction
       -
         name: Run PHPUnit
         run: docker compose exec -T backend bin/phpunit
       -
         name: Doctrine Schema Validator
-        if: false
         run: docker compose exec -T backend bin/console -e test doctrine:schema:validate
       -
         name: Cleanup override file

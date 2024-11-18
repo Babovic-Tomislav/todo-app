@@ -2,6 +2,10 @@
 
 namespace Shared\UI\Controller\Web;
 
+use Shared\Application\Command\CommandBusInterface;
+use Shared\Application\Command\CommandHandleTrait;
+use Shared\Application\Query\QueryBusInterface;
+use Shared\Application\Query\QueryHandleTrait;
 use Shared\UI\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -11,10 +15,15 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 abstract class AbstractWebController extends AbstractController
 {
+    use CommandHandleTrait;
+    use QueryHandleTrait;
+
     public function __construct(
         private readonly \Twig\Environment $template,
         private readonly FormFactoryInterface $formFactory,
         private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly CommandBusInterface $commandBus,
+        private readonly QueryBusInterface $queryBus,
     ) {
         parent::__construct($this->formFactory);
     }
@@ -87,7 +96,7 @@ abstract class AbstractWebController extends AbstractController
 
     /**
      * @param array<mixed> $parameters
-     * @param int          $status     The HTTP status code (302 "Found" by default)
+     * @param int $status The HTTP status code (302 "Found" by default)
      */
     protected function redirectToRoute(string $route, array $parameters = [], int $status = 302): RedirectResponse
     {
