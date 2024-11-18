@@ -42,7 +42,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/",
-            "Storage\\": "src/Storage"
+            "Storage\\": "src/Storage",
+            "Shared\\": "src/Shared"
         }
     },
     "autoload-dev": {

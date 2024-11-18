@@ -2,7 +2,7 @@ parameters:
     ignoreErrors:
         -
             identifier: trait.unused
-            path: src/Storage/Doctrine/Entity/Traits/*
+            path: src/Shared/Application/Query/*
     level: 8
     paths:
         - bin/
@@ -12,3 +12,23 @@ parameters:
         - tests/
     excludePaths:
         - tests/bootstrap.php
+
+services:
+    -
+      class: Shared\Infrastructure\PHPStan\NoDirectInstantiationRule
+      tags:
+          - phpstan.rules.rule
+      arguments:
+          restrictedClass: Shared\Domain\Model\AbstractEntity
+          allowedContexts:
+              - Shared\Domain\Factory\AbstractDomainModelFactory
+              - Shared\Domain\Mapper\AbstractModelMapper
+          reflectionProvider: @reflectionProvider
+    -
+      class: Shared\Infrastructure\PHPStan\ConcreteRepositoryRule
+      tags:
+          - phpstan.rules.rule
+      arguments:
+          requiredSubInterface: Shared\Domain\Repository\DomainModelRepositoryInterface
+          subClassOf: Shared\Domain\Repository\AbstractDomainModelRepository
+          reflectionProvider: @reflectionProvider

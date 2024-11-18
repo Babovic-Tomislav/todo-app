@@ -1,4 +1,6 @@
 imports:
+    - { resource: "../src/Storage/storage-services.yaml" }
+    - { resource: "../src/Shared/shared-services.yaml" }
 
 services:
     # default configuration for services in *this* file
