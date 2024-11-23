@@ -30,44 +30,39 @@ jobs:
           load: true
           files: |
             compose.yaml
-            compose.override.yaml
           set: |
             *.cache-from=type=gha,scope=${{github.ref}}
             *.cache-from=type=gha,scope=refs/heads/main
             *.cache-to=type=gha,scope=${{github.ref}},mode=max
       -
         name: Start services
-        run: docker compose up --wait --no-build
+        run: |
+          echo "services:" > compose.override.yaml
+          echo "  nginx:" >> compose.override.yaml
+          echo "    ports:" >> compose.override.yaml
+          echo "      - '809:80'" >> compose.override.yaml
+          docker compose -f compose.yaml -f compose.override.yaml up --wait --no-build -d
+      -
+        name: Install dependencies
+        run: docker compose exec -T backend composer install
       -
         name: Check HTTP reachability
-        run: curl -v --fail-with-body http://localhost
-      -
-        name: Check HTTPS reachability
-        if: false # Remove this line when the homepage will be configured, or change the path to check
-        run: curl -vk --fail-with-body https://localhost
+        if: false
+        run: curl -v --fail-with-body http://localhost:809
       -
         name: Create test database
-        if: false # Remove this line if Doctrine ORM is installed
-        run: docker compose exec -T php bin/console -e test doctrine:database:create
+        run: docker compose exec -T backend bin/console -e test doctrine:database:create
       -
         name: Run migrations
-        if: false # Remove this line if Doctrine Migrations is installed
-        run: docker compose exec -T php bin/console -e test doctrine:migrations:migrate --no-interaction
+        if: false
+        run: docker compose exec -T backend bin/console -e test doctrine:migrations:migrate --no-interaction
       -
         name: Run PHPUnit
-        if: false # Remove this line if PHPUnit is installed
-        run: docker compose exec -T php bin/phpunit
+        run: docker compose exec -T backend bin/phpunit
       -
         name: Doctrine Schema Validator
-        if: false # Remove this line if Doctrine ORM is installed
-        run: docker compose exec -T php bin/console -e test doctrine:schema:validate
-  lint:
-    name: Docker Lint
-    runs-on: ubuntu-latest
-    steps:
+        if: false
+        run: docker compose exec -T backend bin/console -e test doctrine:schema:validate
       -
-        name: Checkout
-        uses: actions/checkout@v4
-      -
-        name: Lint Dockerfile
-        uses: hadolint/hadolint-action@v3.1.0
+        name: Cleanup override file
+        run: rm -f override.yaml

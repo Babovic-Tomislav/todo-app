@@ -11,7 +11,7 @@ help:
 # setups dev environment
 dev: up composer_install clean_db run_fixtures
 
-dev_checks: csfix stan validate_doctrine_scheme
+dev_checks: csfix stan validate_doctrine_scheme run_tests
 
 # runs composer install and installs project dependencies
 composer_install:
@@ -69,13 +69,13 @@ status:
 	@$(DOCKER) ps
 
 stan:
-	@${DOCKER_COMPOSE} exec backend vendor/bin/phpstan analyze -l 8 src
+	@${DOCKER_COMPOSE} exec backend vendor/bin/phpstan analyze -c phpstan.dist.neon
 
 csfix:
 	@${DOCKER_COMPOSE} exec backend vendor/bin/php-cs-fixer fix --ansi -v --config=.php-cs-fixer.dist.php --path-mode=intersection src migrations
 
-tests:
-	@${DOCKER_COMPOSE} exec backend vendor/bin/phpunit src
+run_tests:
+	@${DOCKER_COMPOSE} exec backend bin/phpunit
 
 clear_cache:
 	@${DOCKER_COMPOSE} exec backend bin/console cache:clear

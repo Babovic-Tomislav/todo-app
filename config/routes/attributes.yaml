@@ -1,0 +1,10 @@
+api_routes:
+  resource: '../../src/**/UI/Controller/Api/**'
+  type: attribute
+  prefix: '/api'
+  name_prefix: 'api.'
+
+web_routes:
+  resource: '../../src/**/UI/Controller/Web/**'
+  type: attribute
+  name_prefix: 'web.'

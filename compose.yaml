@@ -1,12 +1,17 @@
 services:
   backend:
+    container_name: todo-app-backend
     restart: unless-stopped
+    image: todo-app-backend:local
+    build:
+      context: .
     volumes:
       - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini:ro
       - .:/var/www/app
     networks:
       - todo-app
   nginx:
+    container_name: todo-app-nginx
     image: nginx:1.17.3
     restart: unless-stopped
     volumes:
@@ -18,10 +23,15 @@ services:
       - backend
     command: [nginx, "-g", "daemon off;"]
   storage:
-    image: mariadb:10.2.29
+    container_name: todo-app-storage
+    image: mysql:8.0.33
     volumes:
       - persistent:/var/lib/mysql
-      - ./docker/db/:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     networks:
       - todo-app
 
