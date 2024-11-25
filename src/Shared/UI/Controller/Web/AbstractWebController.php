@@ -6,10 +6,12 @@ use Shared\Application\Command\CommandBusInterface;
 use Shared\Application\Command\CommandHandleTrait;
 use Shared\Application\Query\QueryBusInterface;
 use Shared\Application\Query\QueryHandleTrait;
+use Shared\Domain\Pagination\PaginationData;
 use Shared\UI\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -111,5 +113,16 @@ abstract class AbstractWebController extends AbstractController
     protected function generateUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
         return $this->urlGenerator->generate($route, $parameters, $referenceType);
+    }
+
+    protected function extractPaginationData(Request $request): PaginationData
+    {
+        $limit = $request->get('limit');
+        $offset = $request->get('offset');
+
+        $limit = is_numeric($limit) && (int) $limit >= 0 ? (int) $limit : null;
+        $offset = is_numeric($offset) && (int) $offset >= 0 ? (int) $offset : 0;
+
+        return new PaginationData($limit, $offset);
     }
 }

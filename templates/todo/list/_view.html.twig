@@ -1,0 +1,19 @@
+<div class="card" data-action="click->view-details#open" data-url="{{ path('web.view_todo_list', { 'todoList': list.id }) }}" >
+    <div class="card-header">
+        <h5>{{ list.name }}</h5>
+    </div>
+    <div class="card-body">
+        <ul class="list-group">
+            {% for item in list.items %}
+                <li class="list-group-item" data-item-id="{{ item.id }}">
+                    {{ item.description }}
+                   <span class="item-completed">{{ item.completed ? '✅' : '❌' }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="card-footer" data-controller="delete-todo-list">
+        <a href="{{ path('web.edit_todo_list', { 'todoList': list.id }) }}" class="btn btn-primary" data-action="click->view-details#stopPropagation">{{ 'Edit'| trans }}</a>
+        <a href="{{ path('web.delete_todo_list', { 'todoList': list.id }) }}" class="btn btn-primary" data-todo-list-id="{{ list.id }}" data-action="click->view-details#stopPropagation click->delete-todo-list#delete">{{ 'Delete'|trans }}</a>
+    </div>
+</div>

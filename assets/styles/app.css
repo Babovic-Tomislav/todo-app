@@ -1,0 +1,101 @@
+body {
+    background-color: white;
+    font-family: Arial, sans-serif;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 16px;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card-header {
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    padding: 16px;
+}
+
+.card-header h5 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.card-body {
+    padding: 16px;
+    background-color: white;
+}
+
+.list-group-item {
+    border: none;
+    padding: 8px 16px;
+}
+
+.card-footer {
+    background-color: white;
+    border-top: 1px solid #ddd;
+    padding: 16px;
+    text-align: right;
+}
+
+.btn-primary {
+    background-color: deepskyblue;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.navbar {
+    background-color: deepskyblue;
+    padding: 16px;
+    text-align: center;
+}
+
+.navbar-brand {
+    color: white;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
+    color: white;
+}
+
+.nav-link {
+    color: white;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.nav-item {
+    background-color: deepskyblue;
+    margin: 0 8px;
+    border: 0px;
+}
+
+.nav-item:hover {
+    color: white;
+    transform: scale(1.05);
+}
+
+.navbar-nav .nav-link {
+    color: white;
+}
+
+.add-new-list-btn {
+    margin-top: 20px; /* Adjust the value as needed */
+}

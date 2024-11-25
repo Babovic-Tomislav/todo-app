@@ -8,13 +8,4 @@ class UserException extends \Exception
     {
         parent::__construct($message, $code);
     }
-
-    public static function becauseUserNotFound(?string $message = null): self
-    {
-        if (!empty($message)) {
-            return new self($message);
-        }
-
-        return new self('User not found', 404);
-    }
 }

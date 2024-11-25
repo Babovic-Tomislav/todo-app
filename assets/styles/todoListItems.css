@@ -1,0 +1,41 @@
+.todo-items {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.todo-items ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.todo-items li {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align items to the left */
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.todo-items li:last-child {
+    border-bottom: none;
+}
+
+.todo-items .status-checkbox {
+    margin-left: 20px; /* Add margin to the left of the checkboxes */
+}
+
+.todo-items button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.todo-items button:hover {
+    background-color: #0056b3;
+}

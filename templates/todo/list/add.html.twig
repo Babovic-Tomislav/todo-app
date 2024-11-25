@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'Add todo list'|trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'Add todo list'|trans }}</h1>
+    {{ form_start(form) }}
+
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+
+    <div class="todo-items">
+         {{ form_label(form.items) }}
+
+        <div {{ stimulus_controller('form-collection') }}
+                data-form-collection-index-value="{{ form.items|length > 0 ? form.items|last.vars.name + 1 : 0 }}"
+                data-form-collection-prototype-value="{{ form_widget(form.items.vars.prototype)|e('html_attr') }}"
+        >
+            <ul {{ stimulus_target('form-collection', 'collectionContainer') }}>
+                {% for item in form.items %}
+                    <li>{{ include('todo/item/view.html.twig', { form: item }) }}
+                    <button {{ stimulus_target('form-collection', 'deleteItemButton')}} type="button" {{ stimulus_action('form-collection', 'deleteCollectionElement') }}>{{ 'Delete'|trans }}</button>
+                    </li>
+                {% endfor %}
+            </ul>
+            <button type="button" {{ stimulus_action('form-collection', 'addCollectionElement') }}>{{ 'Add item'|trans }}</button>
+        </div>
+        {{ form_errors(form.items) }}
+
+    </div>
+    {{ form_row(form.save) }}
+    {{ form_row(form._token) }}
+    {{ form_row(form.id) }}
+
+    {{ form_end(form, {render_rest: false}) }}
+
+
+{% endblock %}
+

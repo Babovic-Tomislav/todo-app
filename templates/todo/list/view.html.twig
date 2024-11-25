@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'View todo list'|trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ todoList.name }}</h1>
+    <p>{{ todoList.description }}</p>
+
+    <div class="todo-items" data-controller="todo-item">
+        {{ 'Items'|trans }}:
+        <ul>
+            {% for item in todoList.items %}
+                <li class="list-group-item">
+                    {{ item.description }}
+                    <input type="checkbox" class="status-checkbox" data-todo-list-id="{{ todoList.id }}" data-item-id="{{ item.id }}" data-todo-item-target="checkbox" data-action="change->todo-item#toggle" {{ item.completed ? 'checked' : '' }}>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

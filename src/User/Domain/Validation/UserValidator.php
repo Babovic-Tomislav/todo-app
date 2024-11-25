@@ -2,7 +2,6 @@
 
 namespace User\Domain\Validation;
 
-use Shared\Domain\Translator\TranslatorInterface;
 use Shared\Domain\Validation\AbstractDomainModelValidator;
 use Shared\Domain\Validation\Result;
 use User\Domain\Configuration\UserConfiguration;
@@ -11,49 +10,107 @@ use User\Domain\Specification\IsUniqueEmailSpecificationInterface;
 class UserValidator extends AbstractDomainModelValidator
 {
     public function __construct(
-        private IsUniqueEmailSpecificationInterface $isUniqueEmailSpecification,
-        protected TranslatorInterface $translator,
+        private readonly IsUniqueEmailSpecificationInterface $isUniqueEmailSpecification,
     ) {
-        parent::__construct($this->translator);
     }
 
-    // validate user, use $errors
     public function validate(array $data): Result
     {
         $errors = [];
 
-        if (!isset($data['name'])) {
-            $errors['name'] = $this->translator->translate('Name is required');
-        }
+        $this->validateEmail($data, $errors);
+        $this->validateName($data, $errors);
+        $this->validateLastname($data, $errors);
+        $this->validatePassword($data, $errors);
 
-        if (!isset($data['lastname'])) {
-            $errors['lastname'] = $this->translator->translate('Lastname is required');
-        }
+        return new Result($errors);
+    }
 
-        if (!isset($data['username'])) {
-            $errors['username'] = $this->translator->translate('Username is required');
-        }
-
+    /**
+     * @param array<string, mixed> $data
+     * @param array<string, string> $errors
+     */
+    private function validateEmail(array $data, array &$errors): void
+    {
         if (!isset($data['email'])) {
-            $errors['email'] = $this->translator->translate('Email is required');
-        }
-
-        if (!isset($data['password'])) {
-            $errors['password'] = $this->translator->translate('Password is required');
+            $errors['email'] = 'user.email.required';
         }
 
         if (!filter_var($data['email'], \FILTER_VALIDATE_EMAIL)) {
-            $errors['email'] = $this->translator->translate('Invalid email format');
+            $errors['email'] = 'user.email.invalid';
+        }
+
+        if (!$this->isUniqueEmailSpecification->isSatisfiedBy($data['email'])) {
+            $errors['email'] = 'user.email.unique';
+        }
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @param array<string, string> $errors
+     */
+    private function validateName(array $data, array &$errors): void
+    {
+        if (!isset($data['name'])) {
+            $errors['name'] = 'user.name.required';
+        }
+
+        if (!\is_string($data['name'])) {
+            $errors['name'] = 'user.name.type';
+        }
+
+        if (\strlen($data['name']) < UserConfiguration::getMinimumNameLength()) {
+            $errors['name'] = 'user.name.length.minimum';
+        }
+
+        if (\strlen($data['name']) > UserConfiguration::getMaximumNameLength()) {
+            $errors['name'] = 'user.name.length.maximum';
+        }
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @param array<string, string> $errors
+     */
+    private function validatePassword(array $data, array &$errors): void
+    {
+        if (!isset($data['password'])) {
+            $errors['password'] = 'user.password.required';
+        }
+
+        if (!\is_string($data['password'])) {
+            $errors['password'] = 'user.password.type';
         }
 
         if (\strlen($data['password']) < UserConfiguration::getMinimumPasswordLength()) {
-            $errors['password'] = $this->translator->translate('password.length.minimum', ['%limit%' => UserConfiguration::getMinimumPasswordLength()]);
+            $errors['password'] = 'user.password.length.minimum';
         }
 
-        if ($this->isUniqueEmailSpecification->isSatisfiedBy($data['email'])) {
-            $errors['email'] = $this->translator->translate('Email is already in use');
+        if (\strlen($data['password']) > UserConfiguration::getMaximumPasswordLength()) {
+            $errors['password'] = 'user.password.length.maximum';
+        }
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @param array<string, string> $errors
+     */
+    private function validateLastname(array $data, array &$errors): void
+    {
+        if (!isset($data['lastname'])) {
+            $errors['lastname'] = 'user.lastname.required';
         }
 
-        return new Result($errors);
+        if (!\is_string($data['lastname'])) {
+            $errors['lastname'] = 'user.lastname.type';
+        }
+
+        if (\strlen($data['lastname']) < UserConfiguration::getMinimumLastnameLength()) {
+            $errors['lastname'] = 'user.lastname.length.minimum';
+        }
+
+        if (\strlen($data['lastname']) > UserConfiguration::getMaximumLastnameLength()) {
+            $errors['lastname'] = 'user.lastname.length.maximum';
+        }
     }
 }

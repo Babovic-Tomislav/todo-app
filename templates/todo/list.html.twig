@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'Todo lists'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="row" data-controller="view-details" >
+        {% for list in lists %}
+            <div class="col-4">
+                {{ include('todo/list/_view.html.twig', {'list': list}) }}
+            </div>
+        {% endfor %}
+
+    <!-- Modal -->
+    <div class="modal fade" id="viewDetailsModal" tabindex="-1" aria-labelledby="viewDetailsModalLabel" aria-hidden="true" data-view-details-target="modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewDetailsModalLabel">Todo List Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" data-view-details-target="modalBody">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <a href="{{ path('web.add_todo_list') }}" class="btn btn-primary add-new-list-btn">{{ 'Add new list'|trans }}</a>
+
+{% endblock %}

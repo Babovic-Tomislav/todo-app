@@ -16,6 +16,6 @@ class IsUniqueEmailSpecification implements IsUniqueEmailSpecificationInterface
      */
     public function isSatisfiedBy(mixed $value): bool
     {
-        return $this->repository->existsWith(['email' => $value]);
+        return $this->repository->existsWith(['email' => $value]) === false;
     }
 }

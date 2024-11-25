@@ -6,12 +6,16 @@ use Shared\Domain\Model\Email;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use User\Domain\Model\HashedPassword;
+use User\Domain\Model\UserId;
+use User\Domain\Model\Username;
 
 final readonly class AuthUser implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public function __construct(
+        private UserId $id,
         private Email $email,
         private HashedPassword $password,
+        private Username $username,
     ) {
     }
 
@@ -39,5 +43,15 @@ final readonly class AuthUser implements UserInterface, PasswordAuthenticatedUse
     public function getUserIdentifier(): string
     {
         return $this->getEmail();
+    }
+
+    public function getUsername(): Username
+    {
+        return $this->username;
+    }
+
+    public function getId(): UserId
+    {
+        return $this->id;
     }
 }

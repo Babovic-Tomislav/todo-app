@@ -1,0 +1,16 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  Todo\UI\:
+    resource: "UI/*"
+
+  Todo\Infrastructure\:
+    resource: "Infrastructure/*"
+
+  Todo\Domain\:
+    resource: 'Domain/*'
+
+  Todo\Application\:
+    resource: 'Application/*'

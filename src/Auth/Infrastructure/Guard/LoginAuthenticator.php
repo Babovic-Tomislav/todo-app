@@ -29,7 +29,7 @@ final class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     private const LOGIN = 'web.app_login';
 
-    private const SUCCESS_REDIRECT = 'profile';
+    private const SUCCESS_REDIRECT = 'web.todo_lists';
 
     public function __construct(
         private readonly CommandBusInterface $commandBus,

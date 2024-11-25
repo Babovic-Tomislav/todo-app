@@ -16,19 +16,14 @@ trait UuidPrimaryKeyEntityTrait
     ]
     protected string $id;
 
-    public function getUuid(): string
+    #[Pure]
+    public function getId(): string
     {
         return $this->id;
     }
 
-    public function setUuid(string $uuid): void
+    public function setId(string $id): void
     {
-        $this->id = $uuid;
-    }
-
-    #[Pure]
-    public function getId(): string
-    {
-        return $this->getUuid();
+        $this->id = $id;
     }
 }

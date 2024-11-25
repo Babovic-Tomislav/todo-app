@@ -4,7 +4,6 @@ namespace Shared\Domain\Factory;
 
 use Shared\Domain\Exception\DomainModelException;
 use Shared\Domain\Model\AbstractEntity;
-use Shared\Domain\Repository\DomainModelRepositoryInterface;
 use Shared\Domain\Validation\AbstractDomainModelValidator;
 use Shared\Domain\Validation\Result;
 
@@ -12,7 +11,6 @@ abstract readonly class AbstractDomainModelFactory
 {
     public function __construct(
         protected AbstractDomainModelValidator $validator,
-        protected DomainModelRepositoryInterface $repository,
     ) {
     }
 
@@ -40,5 +38,10 @@ abstract readonly class AbstractDomainModelFactory
     /**
      * @throws DomainModelException
      */
-    abstract protected function throwValidationException(Result $validationResult): void;
+    protected function throwValidationException(Result $validationResult): void
+    {
+        throw DomainModelException::becauseInvalidData(\sprintf('Invalid data while creating: %s. %s', $this->getClass(), $validationResult->getErrors()[array_key_first($validationResult->getErrors())]));
+    }
+
+    abstract protected function getClass(): string;
 }

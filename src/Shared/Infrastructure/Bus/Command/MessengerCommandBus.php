@@ -24,7 +24,7 @@ final readonly class MessengerCommandBus implements CommandBusInterface
         try {
             $this->messageBus->dispatch($command);
         } catch (HandlerFailedException $e) {
-            $this->throwException($e);
+            throw $this->getException($e);
         }
     }
 }

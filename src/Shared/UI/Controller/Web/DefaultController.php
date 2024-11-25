@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route(path: '/', name: 'app_home')]
+#[Route(path: '{_locale}/', name: 'app_home')]
 #[AsController]
 class DefaultController extends AbstractWebController
 {

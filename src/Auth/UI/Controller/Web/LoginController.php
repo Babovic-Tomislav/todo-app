@@ -11,13 +11,12 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-#[Route(path: '/login', name: 'app_login')]
+#[Route(path: '{_locale}/login', name: 'app_login')]
 #[AsController]
 class LoginController extends AbstractWebController
 {
     public function __invoke(AuthenticationUtils $authUtils, Request $request): Response
     {
-        //        dd($authUtils->getLastAuthenticationError());
         return $this->render('auth/login.html.twig', [
             'last_username' => $authUtils->getLastUsername(),
             'error' => $authUtils->getLastAuthenticationError(),

@@ -105,6 +105,7 @@ abstract class BaseRepository extends ServiceEntityRepository implements Storage
     public function save(StorageEntityInterface $entity, bool $flush = true): void
     {
         $this->getEntityManager()->persist($entity);
+
         if ($flush) {
             $this->getEntityManager()->flush();
         }

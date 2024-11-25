@@ -8,7 +8,7 @@ use Shared\Domain\Model\AbstractEntity;
 use Shared\Domain\Model\AbstractEntityId;
 use Shared\Domain\Model\Email;
 
-final readonly class User extends AbstractEntity
+final class User extends AbstractEntity
 {
     /** @var UserId */
     protected AbstractEntityId $id;

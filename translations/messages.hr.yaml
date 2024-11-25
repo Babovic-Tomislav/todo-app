@@ -1,0 +1,32 @@
+password:
+  length:
+    minimum: "Lozinka mora biti najmanje %limit% znakova duga"
+    maximum: "Lozinka mora biti najviše %limit% znakova duga"
+username:
+  length:
+    minimum: "Korisničko ime mora biti najmanje %limit% znakova dugo"
+    maximum: "Korisničko ime mora biti najviše %limit% znakova dugo"
+name:
+  length:
+    minimum: "Ime mora biti najmanje %limit% znakova dugo"
+    maximum: "Ime mora biti najviše %limit% znakova dugo"
+lastname:
+  length:
+    minimum: "Prezime mora biti najmanje %limit% znakova dugo"
+    maximum: "Prezime mora biti najviše %limit% znakova dugo"
+
+'E-mail': 'E-mail'
+'Password': 'Lozinka'
+'Sign in': 'Prijava'
+'Register': 'Registracija'
+'Logout': 'Odjava'
+'Todo lists': 'Popis obaveza'
+'Add new list': 'Dodaj novi popis'
+'View todo list': 'Pregled popisa obaveza'
+'Items': 'Stavke'
+'Add todo list': 'Dodaj popis obaveza'
+'Edit todo list': 'Uredi popis obaveza'
+'Delete todo list': 'Obriši popis obaveza'
+'Add item': 'Dodaj stavku'
+'Delete': 'Obriši'
+'Edit': 'Uredi'

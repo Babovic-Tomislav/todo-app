@@ -7,11 +7,20 @@ use Shared\Application\Query\QueryHandlerInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+use Todo\Infrastructure\CompilerPass\TodoListConfigurationPass;
+use Todo\Infrastructure\CompilerPass\TodoListItemConfigurationPass;
 use User\Infrastructure\CompilerPass\UserConfigurationPass;
 
 class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
+
+    public function getCompilerPasses(ContainerBuilder $container): void
+    {
+        $container->addCompilerPass(new UserConfigurationPass());
+        $container->addCompilerPass(new TodoListConfigurationPass());
+        $container->addCompilerPass(new TodoListItemConfigurationPass());
+    }
 
     protected function build(ContainerBuilder $container): void
     {
@@ -23,6 +32,6 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(QueryHandlerInterface::class)
             ->addTag('messenger.message_handler', ['bus' => 'messenger.bus.query']);
 
-        $container->addCompilerPass(new UserConfigurationPass());
+        $this->getCompilerPasses($container);
     }
 }

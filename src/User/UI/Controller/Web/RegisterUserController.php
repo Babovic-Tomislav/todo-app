@@ -12,7 +12,7 @@ use User\Application\Command\UserCreated\UserCreatedCommand;
 use User\Application\Command\UserCreated\UserCreatedHandler;
 use User\Infrastructure\Form\RegisterUserFormType;
 
-#[Route(path: '/register', name: 'register', methods: ['GET', 'POST'])]
+#[Route(path: '{_locale}/register', name: 'register', methods: ['GET', 'POST'])]
 class RegisterUserController extends AbstractWebController
 {
     public function __invoke(Request $request, UserCreatedHandler $createdHandler, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator): Response
@@ -32,7 +32,7 @@ class RegisterUserController extends AbstractWebController
                 active: $userData['active'],
             ));
 
-            return $this->redirectToRoute('task_success');
+            return $this->redirectToRoute('web.app_login');
         }
 
         return $this->render('user/register.html.twig', [

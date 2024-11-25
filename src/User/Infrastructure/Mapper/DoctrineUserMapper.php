@@ -7,6 +7,7 @@ use Shared\Domain\Model\AbstractEntity;
 use Shared\Domain\Model\Email;
 use Shared\Domain\Model\StorageEntityInterface;
 use Storage\Doctrine\Entity\User as StorageUser;
+use Storage\Doctrine\Repository\UserRepository as StorageUserRepository;
 use User\Domain\Model\HashedPassword;
 use User\Domain\Model\User;
 use User\Domain\Model\UserId;
@@ -14,6 +15,11 @@ use User\Domain\Model\Username;
 
 class DoctrineUserMapper extends AbstractModelMapper
 {
+    public function __construct(
+        private StorageUserRepository $storageUserRepository,
+    ) {
+    }
+
     /**
      * @param StorageUser $entity
      *
@@ -39,7 +45,11 @@ class DoctrineUserMapper extends AbstractModelMapper
      */
     public function toStorageEntity(AbstractEntity $entity): StorageEntityInterface
     {
-        $user = new StorageUser(id: $entity->getId()->getValue());
+        $user = $this->storageUserRepository->find($entity->getId()->getValue());
+
+        if (null === $user) {
+            $user = new StorageUser(id: $entity->getId()->getValue());
+        }
 
         $user->setName($entity->getName())
             ->setActive($entity->isActive())
