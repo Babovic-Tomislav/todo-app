@@ -9,7 +9,7 @@ help:
 	@echo "--> You are running default target. Look at the Makefile to see other available targets."
 
 # setups dev environment
-dev: up composer_install clean_db run_fixtures
+dev: up composer_install migration_migrate assetmap_install
 
 dev_checks: csfix stan validate_doctrine_scheme run_tests
 
@@ -91,3 +91,9 @@ run_fixtures:
 
 validate_doctrine_scheme:
 	@${DOCKER_COMPOSE} exec backend bin/console doctrine:schema:validate
+
+assetmap_install:
+ 	@${DOCKER_COMPOSE} exec backend bin/console importmap:install
+
+migration_migrate:
+	@${DOCKER_COMPOSE} exec backend bin/console d:m:m --no-interaction

@@ -8,10 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Todo\Infrastructure\Mapper\DoctrineTodoListMapper;
 
 #[Route('{_locale}/todo-lists/{todoList}', name: 'view_todo_list', methods: ['GET'])]
 #[AsController]
+#[IsGranted('ROLE_USER')]
 class ViewTodoListController extends AbstractWebController
 {
     public function __invoke(Request $request, TodoList $todoList, DoctrineTodoListMapper $mapper): Response

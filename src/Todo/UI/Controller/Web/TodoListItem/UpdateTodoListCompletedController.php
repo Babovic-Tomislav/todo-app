@@ -8,12 +8,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Todo\Application\Command\UpdateTodoListItem\UpdateTodoListItemCommand;
 use Todo\Infrastructure\Formater\DoctrineTodoListFormater;
 use Todo\Infrastructure\Formater\DoctrineTodoListItemFormater;
 
 #[Route('{_locale}/todo-lists/{todoList}/items/{todoListItem}/completed', name: 'update_todo_list_item_completed', methods: ['PUT'])]
 #[AsController]
+#[IsGranted('ROLE_USER')]
 class UpdateTodoListCompletedController extends AbstractWebController
 {
     public function __invoke(

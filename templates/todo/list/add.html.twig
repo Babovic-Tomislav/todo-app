@@ -17,6 +17,8 @@
                 data-form-collection-prototype-value="{{ form_widget(form.items.vars.prototype)|e('html_attr') }}"
         >
             <ul {{ stimulus_target('form-collection', 'collectionContainer') }}>
+                <button hidden="true" {{ stimulus_target('form-collection', 'deleteItemButton')}} type="button" {{ stimulus_action('form-collection', 'deleteCollectionElement') }}>{{ 'Delete'|trans }}</button>
+
                 {% for item in form.items %}
                     <li>{{ include('todo/item/view.html.twig', { form: item }) }}
                     <button {{ stimulus_target('form-collection', 'deleteItemButton')}} type="button" {{ stimulus_action('form-collection', 'deleteCollectionElement') }}>{{ 'Delete'|trans }}</button>

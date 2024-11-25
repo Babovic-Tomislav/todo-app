@@ -8,12 +8,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Todo\Application\Command\EditTodoList\EditTodoListCommand;
 use Todo\Infrastructure\Form\TodoListType;
 use Todo\Infrastructure\Formater\DoctrineTodoListFormater;
 
 #[Route('{_locale}/todo-lists/{todoList}/edit', name: 'edit_todo_list', methods: ['GET', 'POST'])]
 #[AsController]
+#[IsGranted('ROLE_USER')]
 class EditTodoListController extends AbstractWebController
 {
     public function __invoke(Request $request, TodoList $todoList, DoctrineTodoListFormater $formater): Response
